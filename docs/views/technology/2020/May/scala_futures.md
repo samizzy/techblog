@@ -10,25 +10,25 @@ tags:
 categories:
  - technology
 ---
-
-# Towards the future
+[[toc]]
+# Towards the Future
 What are futures? Is this a concept only limited to select few from scala? Will it affect your future? We are going to find out about all this and more. Keep reading.
 <!-- more -->
 
 <img src="/augmented-reality-education-futre.jpg"/>
 
-## So what are futures?
+## So what are Futures?
 It is a model of parallel programming, there are other models such actor model. It is not limited to scala, there are similar apis in java, javascript and other languages as well.
 
-## Need for futures
-What.... parallel programming? People have been parallel programming before right? Java people will say they have java.lang.Thread, why would they bother about futures?
+## Need for Futures
+_Parallel programming_? People have been parallel programming before right? Java people will say they have java.lang.Thread, why would they bother about futures?
 The answer is that Futures are a wrapper over threads, they are a higher level programming api. They provide us many convenient abilities which helps the developer to focus on their programming logic instead of thread creation and their _interaction_. We will see the advantages ahead.
 
-## Let's do some coding yeah?!
-### Scala version
-I am using scala version 2.11.12 and here is the [scala doc for futures](https://www.scala-lang.org/api/2.11.12/index.html#scala.concurrent.Future)
+## Let's do some Coding!
+### Scala Version
+I am using scala version 2.11.12 and you can find the scala doc for futures [here](https://www.scala-lang.org/api/2.11.12/index.html#scala.concurrent.Future)
 
-### Basic Initiliasation code
+### Basic Starter Code
 
 ``` scala
 import scala.concurrent.Future
@@ -47,7 +47,7 @@ object Main {
 }
 ```
 So what we have done here? 
-We have defined a function `stringToInt()` that takes a string as input and converts it to integer, we are not concerned with the stirng not being a valid number for now. We want to print the number returned. Now we wrap the call to this function using `Future{..code block..}` and in scala every expression returns and this returns a `Future[Unit]` as println returns Unit.
+We have defined a function `stringToInt()` that takes a string as input and converts it to integer, we are not concerned with the string not being a valid number for now. We want to print the number returned. Now we wrap the call to this function using `Future{..code block..}` and in scala every expression returns and this returns a `Future[Unit]` as println returns Unit.
 
 So yeah we are done now! This code will print the value 123 in a separate thread! Now lets execute this code.
 
@@ -58,16 +58,17 @@ So lets add this line at the end to see the output to wait till the future finis
 ``` scala
 Await.result(future, Duration.Inf)
 ``` 
-::: tip
-You can run all the examples online on [scastie](https://scastie.scala-lang.org/) and you dont have to write inside main, you can directly start coding away! :heart_eyes:
-:::
 And now you will see `123` on console. :tada:
 
-#### Understanding the code
+::: tip Tip
+You can run all the examples online on [scastie](https://scastie.scala-lang.org/) and you dont have to write inside main, you can directly start coding away! :heart_eyes:
+:::
+
+#### Understanding the Code
 
 We skipped over a lot of things before, so lets look at it in a bit more detail.
 
-If you try using `Future{}` without importing `import scala.concurrent.ExecutionContext.Implicits._` you will get an error **_"No implicits found for paramerter: ExecutionContext"_**. So implicity you are passing a execution context everytime when you are using `Future{}` without this it wont compile.
+If you try using `Future{}` without importing `import scala.concurrent.ExecutionContext.Implicits._` you will get an error `"No implicits found for parameter: ExecutionContext"`. So implicity you are passing a execution context everytime when you are using `Future{}` without this it wont compile.
 
 So what is an ExecutionContext? For simplicity let's consider its just a thread pool and Futures require you to pass it everytime. **YES EVERYTIME** and that is why it is convenient to make a it a implicit argument. :)
 
@@ -110,16 +111,17 @@ Suppose you a have source of strings coming from somewhere and each string is al
 You are tasked with extracting the number and printing. You look at the problem and devise a strategy.
 
 The strategy is:
-- Get the string
+- get the string
 - replace all english characters
 - trim all the space
+- convert to integer
 - print 
 
 and in that **sequence**.
 
 Each step in the strategy is made into a function and we have chained the functions using map method present on Future. _Cool rite?_ :D. You didnt have to write any code for waiting for the thread to finish, then pass the result of the this thread to the new thread. All this **low level stuff is taken care by the futures api**. In each map method you will get the output of the previous method and you can then perform any operation on them, you are basically being spoon fed the inputs.
 
-I also talked about flatMap rite? Lets first take a look at the signature of map, `def map(fn:(T) => S ): Future[S]` , it takes a function that accepts argument of type `T` then transforms it into type `S`, the map method itself returns type of `Future[S]`, so basically the passed function has the responsibility of doing transformation and then map will return a Future of that transformation!
+I also talked about flatMap rite? Lets first take a look at the signature of **map**, `def map[S](fn:(T) => S ): Future[S]` , it takes a function that accepts argument of type `T` then transforms it into type `S`, the map method itself returns type of `Future[S]`, so basically the passed function has the responsibility of doing transformation and then map will return a Future of that transformation!
 
 But lets look at a scenario, we are told we will get another integer and now we have to add this integer to the extracted integer.
 
@@ -134,7 +136,8 @@ But lets look at a scenario, we are told we will get another integer and now we 
 
   def getToAdd:Int = 20
 ```
-So you say, **"No problem!"**. You rollup your sleeve and then you type up the above solution, but then there's a twist, you're told the number to add is not constant and can randomly change, and it is being fetched from a external source, so you always have to fetch the latest value. Some other developer has already written the code for adding a number to the latest number using Future, so now you are getting a `Future[Int]` instead of `Int`.
+So you say, **"No problem!"**. You rollup your sleeves and then you type up the above solution, but then there's a twist, you're told the number to add is not constant and can randomly change, and it is being fetched from a external source, so you always have to fetch the latest value. Some other developer has already written the code for adding a number to the latest number using Future, so now you are getting a `Future[Int]` instead of `Int`.
+
 ``` scala
 
     val future = Future(getString()).map(sanitize).map(strip).map(stringToInt).
@@ -146,10 +149,12 @@ So you say, **"No problem!"**. You rollup your sleeve and then you type up the a
 
   def getAdded(num: Int):Future[Int] = Future(Random.nextInt(201) + num) //imagine this is from an external source
 ```
+If we take a look at the signature of **flatMap**, `def flatMap[S](fn:(T) => Future[S] ): Future[S]` you will see it takes a function that accepts an argument of type `T` (similar to map) but this function returns a `Future[S]` as compared to `S` in map.
+
 So flatMap are useful when you have a function that itself returns future and not plain object.
 
 #### zip()
-But lets say the developer had only implemented the functionality to fetch the number and not add and then return, then we can use the zip method adds the result of current future (the one on which .zip is called) with another future that is passed as an argument to zip. When I say add result, i mean it delivers the result as a tuple f both results. Below is the code.
+But lets say the developer had only implemented the functionality to fetch the number and not add & return, then we can use the zip method. It adds the result of current future (the one on which .zip is called) with another future that is passed as an argument to zip. When I say add result, i mean it delivers the result as a tuple of both results. Below is the code.
 
 ``` scala
     val future = Future(getString()).map(sanitize).map(strip).map(stringToInt).
@@ -163,7 +168,7 @@ But lets say the developer had only implemented the functionality to fetch the n
   def getNum(): Future[Int] = Future(Random.nextInt(201))
 ```
 
-So thats all for now! Thanks for reading! Hope you feel a little more like a future gangsta now :sunglasses:
+So thats all for now! Thanks for reading! We'll take a look at the rest of the methods some other time. Hope you feel a little more like a future gangsta now :sunglasses:
 
-### Code samples
+## Code Samples
 All code on this page is available on this [GitHub repository](https://github.com/samizzy/scala-futures-basics)
