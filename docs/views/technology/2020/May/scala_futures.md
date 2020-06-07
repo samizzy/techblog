@@ -168,6 +168,8 @@ But lets say the developer had only implemented the functionality to fetch the n
   def getNum(): Future[Int] = Future(Random.nextInt(201))
 ```
 
+Actually we could have achieved the same thing with **flatMap**, it's not hard to figure out so i'll leave it upto you guys. 
+
 So thats all for now! Thanks for reading! We'll take a look at the rest of the methods some other time. Hope you feel a little more like a future gangsta now :sunglasses:
 
 ## Code Samples
