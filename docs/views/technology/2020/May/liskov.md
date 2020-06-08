@@ -22,15 +22,15 @@ There is something called SOLID design principles in Object Oriented programming
 When I first heard of SOLID, I thought **_"I have studied a LOT of Design Patterns, there is probably NOTHING a PUNY set of 5 principles can TEACH ME"_**. Okay, probably didn't exactly think like that but more or less that way. I later realised that most of the problems a software developer faces can mostly be solved just by properly applying these principles. Design patterns are important because they teach you how to deal with a certain defined problem and also write maintainable code but SOLID principles tell you how to approach any code.
 
 ## Definition of Liskov Substitution Principle
-
+::: tip Definition
 "_Let **Φ(x)** be a property provable about objects **x** of type **T**. Then **Φ(y)** should be true for objects **y** of type **S** where **S** is a subtype of **T**._"
-
+:::
 When I first read this, I seriously had the thought of skipping this principle. So I have tried writing it in a way that simple people like me can understand.
 
 Consider we have 2 classes S and T such that there exists a relationship that S is a sub(child) class of T then it should always be possible to substitute instances of S wherever there are instances of T without breaking the code ie, **the code should not need additional changes to accomodate S**.
 
 ## Misunderstanding
-By reading the definition, you would think in strongly typed languages like Java, Scala etc. when using inheritance, the compiler will give us error if we are not conforming to the parent class. So ofcourse we would be able to substitute child class object where parent class object are used. I also read somewhere, that this principle was initially used by Ruby users as they didnt have strong typing. So this you would lead us to think that there is no need for us to know further than this as the language takes care of it for us but it is not really true. Though it is true that the language will take of substitution ability but we still need to take care of the runtime behaviour ourselves :)
+By reading the definition, you would think in strongly typed languages like Java, Scala etc. when using inheritance, the compiler will give us error if we are not conforming to the parent class. So ofcourse we would be able to substitute child class object where parent class object are used. I also read somewhere, that this principle was initially used by Ruby users as they didnt have strong typing. So this would lead us to think that there is no need for us to know further than this as the language takes care of it for us but it is not really true. Though it is true that the language will take of substitution ability but we still need to take care of the runtime behaviour ourselves :)
 
 ## Square and Rectangle Problem
 There is a popular example of Square and Rectangle on the internet and i would also like to use it. So, lets say we define a Rectangle class and then use _inheritance_ to _define_ a Square class,  as "**Every Square is a Rectangle but not every Rectangle is a Square**". 
@@ -256,7 +256,7 @@ We didnt talk about the ShapeDS class before. Taking a look at the signature it 
 
 To know sub type in language like scala there is a concept of **Pattern Matching**. Let's quickly understand it by a example.
 
-``` scala
+``` scala{9,11,13}
 object Main {
   sealed trait Animal
   trait Pet extends Animal
@@ -277,8 +277,9 @@ object Main {
 
 }
 ```
+We have defined a method `def handleAnimal(animal: Animal):Unit`, which takes in a instance of Animal and returns Unit. For the uninformed, Unit in scala means a function does not return anything. Inside the method we check if animal matches with instance of Dog or Animal and perform logic accordingly. It is similar to using instanceof method for checking instance type but pattern matching in scala comes with compile time safety. In Java there is nothing stopping you from checking if an Integer is instanceOf String but in scala this will throw a compile time error.
 
-Pattern matching is very powerful and is used very heavily in Scala. In its most primitive definition it can be seen as like instanceof operator  the `match` keyword with the `case` keyword is checking for instanceof Dog/Tiger.
+Pattern matching is very powerful and is used very heavily in Scala. In its most primitive definition it can be seen as like instanceof operator  the `match` keyword with the `case` keyword is checking for instanceof Dog/Tiger and doing some logic with Dog/Tiger instance.
 
 ### Apply Pattern Matching to Our Shapes problem
 
