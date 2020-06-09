@@ -74,10 +74,10 @@ So lets say in some part of your code base you have code like this,
 and in some other part you have code like this,
 
 ``` scala
-    def adjust(rectangleList: List[Rectangle], factor: Float): List[Rectangle] = list.map(rect => getAdjustedRectangle(rect, factor))
+    def adjust(list: List[Rectangle], factor: Float): List[Rectangle] = list.map(rect => getAdjustedRectangle(rect, factor))
 
     //code that will adjust the height and the width differently
-    def getAdjustedRectangle(rectangleList: Rectangle, factor: Float): Rectangle = {
+    def getAdjustedRectangle(rect: Rectangle, factor: Float): Rectangle = {
         rect.setHeight(rect.getHeight * factor)
         rect.setWidth(rect.getWidth * (1.0 - factor))
         rect
@@ -89,7 +89,7 @@ and in some other part you have code like this,
  This behaviour violates the Liskov Substitution Principle as it presents unexpected behaviour. To solve this you think of a solution,
 
  ``` scala
-    def adjust(rectangleList: List[Rectangle], factor: Float) = list.map(rect => {
+    def adjust(list: List[Rectangle], factor: Float) = list.map(rect => {
         if(rect.isInstanceOf[Square]) getAdjustedSquare(rect.asInstanceOf[Square], factor)
         else getAdjustedRectangle(rect, factor)
     })
@@ -102,7 +102,7 @@ and in some other part you have code like this,
 As a fast work around you have checked if the rectangle is a instance of square
 but you are still violating the principle by introducing special code to handle this _breaking_ behaviour :)
 
-### Basic Start Code
+### Initial Solution
 
 So what can you do??? How can you solve this shizzle?? Well one of the most popular [stackoverflow answer](https://stackoverflow.com/questions/56860/what-is-an-example-of-the-liskov-substitution-principle) for this suggest that we should model our class according to behaviour and not according to data properties. We modeled our classes to satisfy the mathematical model that "**Every Square is a Rectangle but not every Rectangle is a Square**" which leads us to this mess.
 
@@ -224,12 +224,12 @@ object LiskovTest {
 
 The code may not light any bulbs in your mind and may seem obvious as you read, which maybe a good thing as it suggests clarity in code.
 
-### Reflecting on basic code and adding new requirement
+### Reflecting on previous solution and adding new requirement
 
 Okay, lets recap some things. What advantages does the current model gives us? We have defined Shape with abstract methods like `def area(): Double` , `def perimeter(): Double` ,`def draw(): Unit`. We have separated our behaviour and data i.e, we have not embedded fields like height/width in Rectangle class itself.
 Imagine if there was a requirement to add a new field now, say `center` and even though the field is there in the shape object, there is no logic to do anything with the field in shape object itself. Instead some higher level code, lets say the UI wants it for displaying it correctly. 
 
-Also it can happen that it wont end here, there maybe other fields added to the shape object that have nothing to do with logic in shape object itself. This is a commmon occurence in software development as requirements change and we have to adapt. This may eventually lead to the shape object becoming a **GOD** object and will need to change with every requirment and may also be a source for many bugs, with every change and bug you have to write test cases, test this class and all the dependent classes too and this becomes quite a headache for software developers as the code becomes difficult to maintain and eventually when there is a new change nobody wants to touch this class as it may break some other thing :sob:
+Also it can happen that it wont end here, there maybe other fields added to the shape object that have nothing to do with logic in shape object itself. This is a commmon occurence in software development as requirements change and we have to adapt. This may eventually lead to the shape object becoming a **GOD** object and will need to change with every requirment and may also be a source for many bugs, with every change and bug you have to write test cases, test this class and all the dependent classes too and this becomes quite a headache for software developers as the code becomes difficult to maintain and eventually when there is a new change nobody wants to touch this class as it may break some other thing :sob:. The fix to this falls under another principle called Single Responsibility Principle.
 
 Ok so lets get back to the shape example. Uptill now our code obeys the LSP, there is no breaking change in behaviour of sub types. Lets add a requirement. Shapes should be adjustable, ie, we should be be able to manipulate their dimensions.
 
@@ -312,7 +312,98 @@ case class Rectangle(rect: RectangleDS, color: Color)(implicit inverter: ColorIn
 ```
 Usually when pattern matching is used it covers the entire range of sub types unlike what we did here by just using one sub type each time.
 
-So you might want to spit on my face and say earlier I condemed using rect.isInstanceOf[Square]. Yes it is true because it breaks the behaviour of sub classes amd YES it breaks in our above example too. Infact you can pass a AxisDS type in a Rectangle Shape without compile time error... So what I am saying is, sometimes it is OK to break the LSP principle :P. Yes it is true, you should treat a principle as a guideline, if it doesnt suit your use case then you may need to break it. Also another thing I cant figure out why we would want a generic method at the Shape abstract level because the client will also have to provide the appropriate DS object to the Shape object :rage:, probably it would also need to check the type of shape object using pattern matching? 
+So you might want to spit on my face and say earlier I condemed using rect.isInstanceOf[Square]. Yes it is true because it breaks the behaviour of sub classes amd YES it breaks in our above example too. **Infact you can pass a AxisDS type in a Rectangle Shape without compile time error...which is really bad**. So what I am saying is, sometimes it is OK to break the LSP principle :P. Yes it is true, you should treat a principle as a guideline, if it doesnt suit your use case then you may need to break it.
 
+Also another thing I cant figure out why we would want a generic method at the Shape abstract level because the client will also have to provide the appropriate DS object to the Shape object :rage:, probably it would also need to check the type of shape object using pattern matching? If this is the case then we might as well define our adjust method at the individual shape level and enjoy the benifit of type safety and pattern matching.
+
+### Improving our solution
+
+Lets transfer adjust method to its own trait.
+
+``` scala
+  abstract class Shape extends Colorable with Drawable  {
+    def area(): Double
+    def perimeter(): Double
+  }
+
+  // dont worry about the plus/minus signs they dont really affect our solution.
+  trait Adjustable[-ShapeDS, +Shape]{
+    def adjust(ds : ShapeDS): Shape
+  }
+
+```
+Now lets define adjust method at individual Shape level
+
+``` scala{7,16,24}
+case class Rectangle(rect: RectangleDS, color: Color)(implicit inverter: ColorInvertor) extends FourEdgedShape with Adjustable[RectangleDS,Rectangle] {
+  def area() = rect.height * rect.width
+  def perimeter(): Double = 2 * (rect.width + rect.height)
+  def draw() = println(s"Drawing Rectangle ${rect} with color ${color}")
+  def invert(): Rectangle = copy(color = inverter.invert(color))
+
+  override def adjust(ds: RectangleDS): Rectangle = copy(rect = RectangleDS(rect.height + ds.height, rect.width + ds.width))
+}
+
+case class Square(square: SquareDS, color: Color)( implicit inverter: ColorInvertor) extends FourEdgedShape with Adjustable[SquareDS,Square] {
+  def area() = square.side * square.side
+  def perimeter(): Double = 4 * square.side
+  def draw() = println(s"Drawing Square ${square} with color ${color}")
+  def invert(): Square = copy(color = inverter.invert(color))
+
+  override def adjust(ds: SquareDS): Square = copy(square = SquareDS(square.side + ds.side))
+}
+
+case class Circle(axis: AxisDS, color: Color) extends Shape with Adjustable[AxisDS, Circle]{
+  def area() = Math.PI * axis.length * axis.length
+  def perimeter() = 2 * Math.PI * axis.length
+  def draw() = println(s"Drawing Circle ${axis} with color ${color}")
+
+  override def adjust(ds: AxisDS): Circle = copy(axis = AxisDS(axis.foci + ds.foci, axis.length + ds.length))
+}
+```
+
+Now lets see how a client may use this code.
+
+``` scala
+object LiskovTest {
+
+  implicit val stdColorInverter: ColorInvertor =  new ColorInvertor {
+    override def invert(color: Color): Color = Color(r = 255 - color.r, g = 255 - color.g, b = 255- color.b)
+  }
+
+  def main(args: Array[String]): Unit = {
+    val color = Color(210, 100, 0)
+    //instantiating sub class objects
+    val rect = Rectangle(RectangleDS(10, 12), color)
+    val square = Square(SquareDS(10), color)
+    val circle = Circle(AxisDS(10, 10), color)
+    
+    val shapes = List(rect, square, circle)
+    println(s"\nBefore Adjusting: $shapes")
+    
+    val adjustedShape = adjustShapes(shapes)
+    println(s"\nAfter Adjusting: $adjustedShape")
+ 
+  }
+
+    def adjustShapes(shapeList: List[Shape]): List[Shape] = {
+    shapeList.map{
+      case sh@Square(_,_) => sh.adjust(SquareDS(-2))
+      case sh@Rectangle(_,_) => sh.adjust(RectangleDS(-5, 10))
+      case sh@Circle(_, _) => sh.adjust(AxisDS(5, -2))
+      case _ => sys.error(s"Cannot adjust unidentified shape")
+    }
+  }
+
+
+```
+
+If we run this, the output is
+
+::: tip Output
+Before Adjusting: List(Rectangle(RectangleDS(10,12),Color(210,100,0)), Square(SquareDS(10),Color(210,100,0)), Circle(AxisDS(10,10),Color(210,100,0)))
+
+After Adjusting: List(Rectangle(RectangleDS(5,22),Color(210,100,0)), Square(SquareDS(8),Color(210,100,0)), Circle(AxisDS(15,8),Color(210,100,0)))
+:::
 
 Anyways that's all for now. Hope you learned something.
