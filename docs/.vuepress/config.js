@@ -1,6 +1,6 @@
 module.exports = {
   "base": "/",
-  "title": "techshizzle",
+  "title": "bakacoder",
   "description": " ",
   "dest": "public",
   "head": [
