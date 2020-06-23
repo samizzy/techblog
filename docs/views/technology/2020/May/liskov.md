@@ -406,4 +406,23 @@ Before Adjusting: List(Rectangle(RectangleDS(10,12),Color(210,100,0)), Square(Sq
 After Adjusting: List(Rectangle(RectangleDS(5,22),Color(210,100,0)), Square(SquareDS(8),Color(210,100,0)), Circle(AxisDS(15,8),Color(210,100,0)))
 :::
 
-Anyways that's all for now. Hope you learned something.
+Anyways that's all for now. Hope you learned something or leave a comment if you have doubts.
+***
+<template>
+  <div>
+    <div class='comments'>
+      <Disqus shortname='tech-9732viigce' />
+    </div>
+  </div>
+</template>
+
+<script>
+import { Disqus } from 'vue-disqus'
+
+export default {
+  name: 'PostPage',
+  components: {
+    Disqus
+  }
+}
+</script>

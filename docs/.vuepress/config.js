@@ -1,6 +1,6 @@
 module.exports = {
   "base": "/",
-  "title": "bakacoder",
+  "title": "BakaCoder",
   "description": " ",
   "dest": "public",
   "head": [
