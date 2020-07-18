@@ -78,6 +78,10 @@ Now lets look at some of them. In this section you will only find the descriptio
 
 ### <span>Function Interface</span> 
 
+::: warning Note
+Do not get confused between Function and Functional. Function Interface is one of the type of Functional Interfaces in Java.
+:::
+
 What is a function? a function is something that takes an input and gives an output. Thats basically the Function Interface. (all other interfaces also have one liner definitions).
 
 Lets look at the interface definition.
@@ -108,7 +112,8 @@ public class Main{
         public int age;
         public Person(String name, int age){this.name=name;this.age=age;}
     }
-    //these class could just contain static methods to convert but thats not the focus here.
+    //these class could just contain static methods to convert
+    //but thats not the focus here.
     public static class PersonToJson{
         public toJsonString(Person person){
             return "{name:"+ person.name+", age"+ person.age+ "}";
@@ -125,7 +130,8 @@ public class Main{
 So now that we have the POJOs and converters ready, let's write our method.
 
 ``` java
-    //We have used method overloading here. Both methods take a converter and a person object. 
+    //We have used method overloading here. 
+    //Both methods take a converter and a person object. 
     //Apply the converter to person and then return encoded string.
     public String encodeToUTF8(PersonToJson jsConverter, Person person){
         String person = jsConverter.toJsonString(person);
@@ -204,6 +210,11 @@ public interface Consumer<T> {
     void accept(T t);
 }
 ```
+I can write sysout as below,
+``` java
+Consumer<Object> consumer = o -> System.out.println(o);
+``` 
+cool right?
 
 ### Supplier Interface
 The Supplier Interface is the opposite of Consumer Interface, it only returns something of Type **`T`**
@@ -224,7 +235,7 @@ public interface Predicate<T> {
     boolean test(T t);
 }
 ```
-If you have been paying, this Functional Interface is a special case of Functional Interface which takes Type **`T`** as input and **`Boolean`** as output.
+If you have been paying attention, you will see that Predicate Interface is a special case of Function Interface which takes Type **`T`** as input and **`boolean`** as output.
 
 So it can be written as,
 ``` java
@@ -237,16 +248,42 @@ public interface Function<T, Boolean>{
 There are other interfaces which are just variations of these above interfaces. There are some with having a prefix **Bi** meaning they take 2 input arguments, they maybe of different Types.
 
 So there is BiConsumer, BiPredicate, BiFunction.
+For eg,
+``` java
+public interface BiConsumer<T, U> {
+    //method takes in 2 parameters instead
+    //of 1 hence the name Bi
+    void accept(T t, U u);
+}
+```
+Why do such interfaces exist, well it is a common use case right! Many times you write methods which accept 2 paramters.
+
+But what happens when you need to write more than 2 parameters? In that case you can convert a BiFunction by partially supplying the one of the values.
+``` java
+    String c="";
+    //This funtion takes 2 inputs String,String
+    BiFunction<String,String,Integer> func =
+     (a, b) -> Integer.parseInt(a + b + c); 
+     // Notice we have supplied c during functional declaration.
+     //Also called closure, as we function is closing over the context
+     //in this that is variable c.
+```
+Ofcourse it's not always possible we have any of the 3 values at declaration in that case there are other alternatives, some include defining your own interfaces.
 
 There are other variations such as Predicate which is just a special case of Function as we saw earlier. Other examples are LongConsumer, IntConsumer, DoubleToLongFunction etc etc. You will observe that these type of special variations involve use of primitives instead of Long, Integer, Boolean.
 
+::: tip Why do these special variations exist?
+These special variation with primitives available because people want to use autoboxing (which can use extra memory as compared to primitives) and 
+ofcourse because generics dont support primitives.
+:::
 There are other Functional Interface outside of this package like Runnable Interface. Runnable takes nothing and returns nothing, pretty simple right?
 
 ::: tip Remember
 What makes a interface a Functional interface if it has only one abstract method.
 :::
 
-Anyways that's all for now. Hope you learned something, I will write about Lambdas and Method References next.
+Anyways that's all for now. I will write about Lambdas, Streams and Method References next as that is needed for more clarity about
+actually Functional interfaces.
 ***
 <template>
   <div>
