@@ -1,4 +1,12 @@
 module.exports = {
+  plugins: [
+    [
+      '@vuepress/google-analytics',
+      {
+        'ga': 'UA-172937783-1'
+      }
+    ]
+  ],
   "base": "/",
   "title": "BakaCoder",
   "description": " ",

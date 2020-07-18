@@ -1,7 +1,7 @@
 ---
 home: true
 bgImage: /daniel-leone-v7daTKlZzaw-unsplash.jpg
-heroText : "\"The little things? The little moments? They arent little.\""
+heroText : "\"Those who say it cannot be done should not interrupt those doing it.\""
 # heroImageStyle: {
 #   maxWidth: '600px',
 #   width: '100%',

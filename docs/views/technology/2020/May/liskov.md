@@ -281,6 +281,10 @@ We have defined a method `def handleAnimal(animal: Animal):Unit`, which takes in
 
 Pattern matching is very powerful and is used very heavily in Scala. In its most primitive definition it can be seen as like instanceof operator  the `match` keyword with the `case` keyword is checking for instanceof Dog/Tiger and doing some logic with Dog/Tiger instance.
 
+::: tip Remember
+The main benefit of pattern matching is that it provides compile time safety as compared to simply using instanceOf methods.
+:::
+
 ### Apply Pattern Matching to Our Shapes problem
 
 So let's change our code to use Pattern Matching. I am only showing changes for Rectangle class as others are similar.
@@ -314,7 +318,7 @@ Usually when pattern matching is used it covers the entire range of sub types un
 
 So you might want to spit on my face and say earlier I condemed using rect.isInstanceOf[Square]. Yes it is true because it breaks the behaviour of sub classes amd YES it breaks in our above example too. **Infact you can pass a AxisDS type in a Rectangle Shape without compile time error...which is really bad**. So what I am saying is, sometimes it is OK to break the LSP principle :P. Yes it is true, you should treat a principle as a guideline, if it doesnt suit your use case then you may need to break it.
 
-Also another thing I cant figure out why we would want a generic method at the Shape abstract level because the client will also have to provide the appropriate DS object to the Shape object :rage:, probably it would also need to check the type of shape object using pattern matching? If this is the case then we might as well define our adjust method at the individual shape level and enjoy the benifit of type safety and pattern matching.
+But we can definitely improve upon this solution as I cant figure out why we would want a generic method at the Shape abstract level because the client will also have to provide the appropriate DS object to the Shape object :rage:, probably it would also need to check the type of shape object using pattern matching? If this is the case then we might as well define our adjust method at the individual shape level and enjoy the benifit of type safety and pattern matching.
 
 ### Improving our solution
 
@@ -397,7 +401,11 @@ object LiskovTest {
 
 
 ```
+::: warning Be careful
+One thing to keep in mind is if such pattern matching code for differet shapes is everywhere in your code base then when you are adding new Shape
+you will have to search through all your code base for adding this new Shape. So it is advised that you keep/restrict the code for this in one place/file.
 
+:::
 If we run this, the output is
 
 ::: tip Output
