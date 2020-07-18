@@ -273,7 +273,7 @@ Ofcourse it's not always possible we have any of the 3 values at declaration in 
 There are other variations such as Predicate which is just a special case of Function as we saw earlier. Other examples are LongConsumer, IntConsumer, DoubleToLongFunction etc etc. You will observe that these type of special variations involve use of primitives instead of Long, Integer, Boolean.
 
 ::: tip Why do these special variations exist?
-These special variation with primitives available because people want to use autoboxing (which can use extra memory as compared to primitives) and 
+These special variation with primitives available because people want to avoid use of autoboxing (which can use extra memory as compared to primitives) and 
 ofcourse because generics dont support primitives.
 :::
 There are other Functional Interface outside of this package like Runnable Interface. Runnable takes nothing and returns nothing, pretty simple right?
