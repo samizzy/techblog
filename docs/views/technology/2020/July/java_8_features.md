@@ -93,7 +93,7 @@ public interface Function<T, R> {
 ```
 **Don't let the generics scare you!** The interface signature **`Function<T, R>`** just says that **`T`** is Type of input parameter and **`R`** is the Type of output parameter.
 
-If you look at the **`R apply(T t)`** you will understand this. Also one thing to note is whenever a interface has 2 Type parameters, the first one is usually for input and the latter is for output, this not a rule but the general trend followed, ofcourse you will find many examples where this not followed.
+If you look at the **`R apply(T t)`** you will understand this. Also one thing to note is whenever a interface has 2 Type parameters, the first one is usually for input and the latter is for output, this not a rule but the general trend followed, ofcourse you will find many examples where this is not followed.
 
 Even though I said we will look at the usages later, lets have a quick look how this can be used so that you will be interested to learn further :P
 
@@ -112,7 +112,8 @@ public class Main{
         public int age;
         public Person(String name, int age){this.name=name;this.age=age;}
     }
-    //these class could just contain static methods to convert
+    //these class could just contain static
+    //methods to convert
     //but thats not the focus here.
     public static class PersonToJson{
         public toJsonString(Person person){
@@ -132,10 +133,11 @@ So now that we have the POJOs and converters ready, let's write our method.
 ``` java
     //We have used method overloading here. 
     //Both methods take a converter and a person object. 
-    //Apply the converter to person and then return encoded string.
+    //Apply the converter to person and then 
+    //return encoded string.
     public String encodeToUTF8(PersonToJson jsConverter, Person person){
         String person = jsConverter.toJsonString(person);
-        return new String(person.getBytes(), "UTF-8")
+        return new String(person.getBytes(), "UTF-8");
     }
 
     public String encodeToUTF8(PersonToXml xmlConverter, Person person){
@@ -219,7 +221,7 @@ cool right?
 ### Supplier Interface
 The Supplier Interface is the opposite of Consumer Interface, it only returns something of Type **`T`**
 
-This method seems strange, just return something? Remember this is a interface, when we can store state/other objects inside. Remember our Functional interface earlier?
+This method seems strange, just return something? Remember this is a interface, where we can store other objects inside. Remember our Function interface with json and xml from earlier?
 Alrite lets imagine a pure example of this, how about a Random Number Generator?
 
 ``` java
@@ -261,29 +263,29 @@ Why do such interfaces exist, well it is a common use case right! Many times you
 But what happens when you need to write more than 2 parameters? In that case you can convert a BiFunction by partially supplying the one of the values.
 ``` java
     String c="";
-    //This funtion takes 2 inputs String,String
+    //This function takes 2 inputs String,String
     BiFunction<String,String,Integer> func =
      (a, b) -> Integer.parseInt(a + b + c); 
      // Notice we have supplied c during functional declaration.
-     //Also called closure, as we function is closing over the context
-     //in this that is variable c.
+     //As our function is closing over the context,
+     //in this that is variable c, it can also be called closure.
 ```
 Ofcourse it's not always possible we have any of the 3 values at declaration in that case there are other alternatives, some include defining your own interfaces.
 
 There are other variations such as Predicate which is just a special case of Function as we saw earlier. Other examples are LongConsumer, IntConsumer, DoubleToLongFunction etc etc. You will observe that these type of special variations involve use of primitives instead of Long, Integer, Boolean.
 
 ::: tip Why do these special variations exist?
-These special variation with primitives available because people want to avoid use of autoboxing (which can use extra memory as compared to primitives) and 
+These special variation with primitives are available because people want to avoid use of autoboxing (which can use extra memory as compared to primitives) and 
 ofcourse because generics dont support primitives.
 :::
 There are other Functional Interface outside of this package like Runnable Interface. Runnable takes nothing and returns nothing, pretty simple right?
 
 ::: tip Remember
-What makes a interface a Functional interface if it has only one abstract method.
+What makes a interface a Functional interface is if it has only one abstract method.
 :::
 
 Anyways that's all for now. I will write about Lambdas, Streams and Method References next as that is needed for more clarity about
-actually Functional interfaces.
+actually using Functional interfaces.
 ***
 <template>
   <div>
