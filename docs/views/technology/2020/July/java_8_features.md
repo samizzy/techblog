@@ -7,6 +7,7 @@ tags:
  - java
  - java 8
  - features
+ - functional interfaces
 categories:
  - technology
 ---
@@ -74,9 +75,9 @@ In Java 8, a new package **java.util.function** was introduced, this package con
 An interface which only consists of a _single abstract_ method is called a **Functional Interface.**
 :::
 
-Now lets look at some of them. In this section you will only find the description, they will actually used subsequent sections.
+Now lets look at some of them. In this section you will only find the description, they will actually be used in subsequent sections. The functional interfaces displayed here will only contain the abstract method (they contain other methods) as that will suffice for our understanding.
 
-### <span>Function Interface</span> 
+### Function Interface
 
 ::: warning Note
 Do not get confused between Function and Functional. Function Interface is one of the type of Functional Interfaces in Java.
