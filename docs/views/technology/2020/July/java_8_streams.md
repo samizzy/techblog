@@ -154,6 +154,7 @@ methodFunc(a -> a + 1);
 ```
 ::: warning Note
 I would advise you to read the post on [Functional Interfaces](./java_8_features.html#function-interface) first if you find mentions of Functional Interfaces alien.
+Also look at [this](./java_8_features.html#way-1) to appreciate lambdas a bit more.
 :::
 
 ::: warning Note
@@ -256,9 +257,17 @@ The above stream operations/methods should look similar, the new operations here
 
 Operations `map` and `flatMap` are very similar except that the `flatMap` operation signifies that the logic inside lambda itself returns stream, so all flatMap does it _flattens_ all such returned streams. Flatten here means that it joins all such streams and returns a single stream. We have to do this because our further operations operate on a individual string and not on individual list.
 
-The operation `collect` allows us to convert our streams into Collections. Why couldnt we just return Stream? Remember streams are lazy and unless we do some terminal operation (`collect` is terminal), no processing has actually occured. So returning a Stream would mean doing no processing.
+``` java
+//Function Signature in map
+Function<A, B>
+    //vs
+//Function Signature in flatMap
+Function<A, Stream<B>>
+```
 
-The `collect` operation accepts a `Collector` and the `Collectors` class provides us a lot of ready made Collectors. We could have used `Collectors.toList()`, if the problem said we didnt need to worry about uniqueness. The Collectors class is very powerful and contains a lot of methods, do check it out!
+The operation `collect` allows us to convert our streams into Collections. Why couldnt we just return Stream? Remember streams are lazy and unless we do some terminal operation (`collect` is terminal), no processing has actually occured. So returning a Stream would mean doing no processing (_although it's upto you to decide what you want out of your methods, here we want a `Collection`_).
+
+The `collect` operation is aptly named as it allows us to _collect_ our stream into a collection, therefore it's also a terminal operation. The `collect` operation accepts a `Collector` and the `Collectors` utility class provides us a lot of ready made Collectors. We could have used `Collectors.toList()`, if the problem said we didnt need to worry about uniqueness. The Collectors class is very powerful and contains a lot of methods, do check it out!
 
 ### Problem 3
 

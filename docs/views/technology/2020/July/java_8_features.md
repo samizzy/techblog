@@ -64,7 +64,7 @@ public class Main{
 }
 ```
 
-The compiler complains because at run time, the part with `<Integer>` and `<String>` is removed and then both method signatures look exactly the same as they both have same names and accept a `List` of objects.
+The compiler complains because at run time, the part with `<Integer>` and `<String>` is removed and then both method signatures look exactly the same as they both have same names and accept a `List<Object>`.
 
 
 ## Functional Interfaces
@@ -75,7 +75,7 @@ In Java 8, a new package **java.util.function** was introduced, this package con
 An interface which only consists of a _single abstract_ method is called a **Functional Interface.**
 :::
 
-Now lets look at some of them. In this section you will only find the description, they will actually be used in subsequent sections. The functional interfaces displayed here will only contain the abstract method (they contain other methods) as that will suffice for our understanding.
+Now lets look at some of them. In this section you will only find the description, they will actually be used in subsequent sections. The functional interfaces written here will only show the abstract method (they contain other methods as well) as that will suffice for our understanding.
 
 ### Function Interface
 
@@ -92,9 +92,9 @@ public interface Function<T, R> {
     R apply(T t);
 }
 ```
-**Don't let the generics scare you!** The interface signature **`Function<T, R>`** just says that **`T`** is Type of input parameter and **`R`** is the Type of output parameter.
+**Don't let the generics scare you!** The interface signature **`Function<T, R>`** just says that **`T`** is Type of input parameter and **`R`** is the Type of output parameter. If you look at the **`R apply(T t)`** you will understand this.
 
-If you look at the **`R apply(T t)`** you will understand this. Also one thing to note is whenever a interface has 2 Type parameters, the first one is usually for input and the latter is for output, this not a rule but the general trend followed, ofcourse you will find many examples where this is not followed.
+Also one thing to note is whenever a interface has 2 Type parameters, the first one is usually for input and the latter is for output, this not a rule but the general trend followed, ofcourse you will find many examples where this is not followed.
 
 Even though I said we will look at the usages later, lets have a quick look how this can be used so that you will be interested to learn further :P
 
@@ -157,9 +157,10 @@ Above example was without Functional interface, now lets do one with it.
 ```
 See it has simplified soooooo much!!
 
-How will someone use this method?
+How will someone use this method? I see 2 ways (actually only one is practical).
 
-Way 1: (Dont worry if you dont understand this, move on to way 2)
+#### Way 1
+(Dont worry if you dont understand this, move on to way 2)
 ``` java
     public static void main(String[] arr){
         Person person = new Person("Immortal",10000);
@@ -185,7 +186,8 @@ Way 1: (Dont worry if you dont understand this, move on to way 2)
     }
 ```
 
-Way 2 or as I would like to call it Java 8 way:
+#### Way 2
+(or as I would like to call it Java 8 way)
 
 ``` java
     public static void main(String[] arr){
@@ -203,6 +205,9 @@ interfaces were made to be used with Lambdas.
 
 Now that we have an idea how they will be used, we will quickly go through the rest of the interfaces.
 
+::: tip
+Checkout [this](./java_8_streams.html#what-is-a-lambda) on lambdas to learn more!
+:::
 ### Consumer Interface
 The Consumer Interface is very simply it only takes a input of Type **`T`** and does something but does not return anything thats why it has return type **`void`**.
 
@@ -222,7 +227,7 @@ cool right?
 ### Supplier Interface
 The Supplier Interface is the opposite of Consumer Interface, it only returns something of Type **`T`**
 
-This method seems strange, just return something? Remember this is a interface, where we can store other objects inside. Remember our Function interface with json and xml from earlier?
+This method seems strange, just return something? How can you return something without input? **Ofcourse you can!**
 Alrite lets imagine a pure example of this, how about a Random Number Generator?
 
 ``` java
@@ -232,7 +237,7 @@ public interface Supplier<T> {
 ```
 
 ### Predicate Interface
-The Predicate Interface evaluate a expression and return a boolean. It accepts an input of Type **`T`**. 
+The Predicate Interface tests a expression and returns a boolean. It accepts an input of Type **`T`**. 
 ``` java
 public interface Predicate<T> {
     boolean test(T t);
@@ -261,19 +266,19 @@ public interface BiConsumer<T, U> {
 ```
 Why do such interfaces exist, well it is a common use case right! Many times you write methods which accept 2 paramters.
 
-But what happens when you need to write more than 2 parameters? In that case you can convert a BiFunction by partially supplying the one of the values.
+But what happens when you need to write more than 2 parameters? In that case you can convert a BiFunction by partially supplying one of the values.
 ``` java
-    String c="";
+    String outside ="";
     //This function takes 2 inputs String,String
     BiFunction<String,String,Integer> func =
-     (a, b) -> Integer.parseInt(a + b + c); 
-     // Notice we have supplied c during functional declaration.
+     (a, b) -> Integer.parseInt(a + b + outside); 
+     // Notice we have supplied `outside` during functional declaration.
      //As our function is closing over the context,
-     //in this that is variable c, it can also be called closure.
+     //in this case that is variable `outside`, it can also be called closure.
 ```
 Ofcourse it's not always possible we have any of the 3 values at declaration in that case there are other alternatives, some include defining your own interfaces.
 
-There are other variations such as Predicate which is just a special case of Function as we saw earlier. Other examples are LongConsumer, IntConsumer, DoubleToLongFunction etc etc. You will observe that these type of special variations involve use of primitives instead of Long, Integer, Boolean.
+There are other variations such as Predicate which is just a special case of Function as we saw earlier. Other examples are `LongConsumer, IntConsumer, DoubleToLongFunction` etc etc. You will observe that these type of special variations involve use of primitives instead of `Long, Integer, Boolean`.
 
 ::: tip Why do these special variations exist?
 These special variation with primitives are available because people want to avoid use of autoboxing (which can use extra memory as compared to primitives) and 
