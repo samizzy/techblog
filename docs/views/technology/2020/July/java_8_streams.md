@@ -217,8 +217,15 @@ Now lets take a look at `map` because in your life you would be using it many ti
 ::: tip Remember
 Streams are lazy in nature, therefore use of `sum` method is very important here, because use of this method signifies the start of processing as it's a terminal operation.
 :::
+
+#### Time complexity
+The time complexity of traditional approach is O(n). What do you think is the complexity for stream approach? It's O(n) as well. It is important to understand the why.
+
+When you use streams, every operation on the stream is performed one by one on each element, unless a element has finished going through all operations, the other elements following it are kept on hold. It follows the same pattern as the traditional approach if you think about it.
+
+There are some exceptions to the rule, if the element is filtered out in between, then the next element can start. Operations like  `filter` can drop elements for the next stage.
 ### Problem 2
-You are given a list of list of strings. You have to peform check on the nested list to see if is at least 5 in size. Trim all strings, if they are any of reserved keywords remove them and return only unique strings.
+You are given a list of list of strings. You have to perform check on the nested list to see if it's at least 5 in size. Trim all strings, if they are any of reserved keywords remove them and return only unique strings.
 
 ``` java
 //Traditional Way

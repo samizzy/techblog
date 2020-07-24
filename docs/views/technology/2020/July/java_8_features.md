@@ -13,7 +13,7 @@ categories:
 ---
 
 ## Java 8? Isnt it very old now?
-Java 8 has become quite old now but it is still the most popular Java version in use now. In this post we will go through some Java 8 features and try to understand them. I find many of them really useful and I thought would be awesome to share them.
+Yes, Java 8 has become quite old but it is still the most popular Java version in use now. In this post we will go through some Java 8 features and try to understand them. I find many of them really useful and I thought would be awesome to share them.
 
 <!-- more -->
 
