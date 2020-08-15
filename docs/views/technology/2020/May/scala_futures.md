@@ -10,12 +10,13 @@ tags:
 categories:
  - technology
 ---
-[[toc]]
-# Towards the Future
+## Towards the Future
 What are futures? Is this a concept only limited to select few from scala? Will it affect your future? We are going to find out about all this and more. Keep reading.
 <!-- more -->
 
 <img src="/augmented-reality-education-futre.jpg"/>
+
+[[toc]]
 
 ## So what are Futures?
 It is a _model_ of parallel programming, there are other models such actor model. It is not limited to scala, there are similar apis in java, javascript and other languages as well.

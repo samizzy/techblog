@@ -29,6 +29,9 @@ module.exports = {
   ],
   "theme": "reco",
   "themeConfig": {
+    "mode" : "dark",
+    "modePicker" : false,
+    "codeTheme" : "okaidia",
     "nav": [
       {
         "text": "Home",

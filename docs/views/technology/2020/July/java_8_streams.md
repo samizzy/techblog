@@ -16,13 +16,14 @@ categories:
 
 ## The Change you need: Streams and Lambda
 After learning about streams and lambda in Java 8, my style of writing code underwent a fundamental change. It reduced bugs in my code, enabled me to think more in terms of functional programming and best of all it reduced the number of lines I had to write for a functionality and made the code even more readable! 
+<!-- more -->
 
 However, if you are not familar with streams and lambda then it will this concept will seem very alien and you will stay away from it for the **REST OF YOUR LIFE!**
 
  So I hope after reading this post you will be able to avoid that fate :).
-<!-- more -->
 
 <img src="/lambda.jpg"/>
+
 <sub>Where my Half-Life people at?</sub>
 
 ## What are Streams?
@@ -71,7 +72,7 @@ infiniteNumStream.limit(10); //take the 10 elements then stop
 
 ```
 
-There are also classes to Initialise streams for specific Types. They include IntStream, LongStream, DoubleStream. They include static methods what we saw above and extra methods for the specific Data Type. You can check them out :)
+There are also classes to Initialise streams for specific Types. They include `IntStream, LongStream, DoubleStream`. They include static methods what we saw above and extra methods for the specific Data Type. You can check them out :)
 
 ## What is a Lambda?
 
@@ -349,6 +350,3 @@ export default {
   }
 }
 </script>
-
-
-

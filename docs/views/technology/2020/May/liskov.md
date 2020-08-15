@@ -13,10 +13,11 @@ tags:
 categories:
  - technology
 ---
-[[toc]]
-# The Dreaded Liskov Substitution Principle
+## The Dreaded Liskov Substitution Principle
 There is something called SOLID design principles in Object Oriented programming. It is said that an OO programmer should always know SOLID and apply them religiously in their daily life. We are going to take a look at the L in SOLID, which like all other principles is misunderstood.
 <!-- more -->
+
+[[toc]]
 
 ## How is SOLID different from Design Patterns and why should I try to learn it?
 When I first heard of SOLID, I thought **_"I have studied a LOT of Design Patterns, there is probably NOTHING a PUNY set of 5 principles can TEACH ME"_**. Okay, probably didn't exactly think like that but more or less that way. I later realised that most of the problems a software developer faces can mostly be solved just by properly applying these principles. Design patterns are important because they teach you how to deal with a certain defined problem and also write maintainable code but SOLID principles tell you how to approach any code.
