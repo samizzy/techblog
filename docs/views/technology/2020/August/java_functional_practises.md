@@ -72,7 +72,7 @@ Looking at some code will give you a better idea. Getting the User and UserWithD
         User user = null;
         if(userDetails != null) 
             return userDetails;
-        else user = db.getUser(userName)
+        else user = db.getUser(userName);
 
         //If still not found throw Exception
         if(user == null)
@@ -116,7 +116,7 @@ To be honest the example above is not really long or complex to read but this me
                     return Optional.empty();
                 };
         
-        throwExIfPresent(validateUserName.apply(userName))
+        throwExIfPresent(validateUserName.apply(userName));
 
         //Check cache1 and cache2
         Option<UserWithDetails> userFromCache = 
@@ -236,19 +236,19 @@ public void processRequest(Request request){
     Customer customer = request.getCustomer();
     Long startTime = System.currentTimeMillis();
     Consumer<Stage> save = 
-        stage -> db.saveOrderState(customer, order, startTime, System.currentTimeMillis(), stage) ;
+        stage -> db.saveOrderState(customer, order, startTime, System.currentTimeMillis(), stage);
     
-    save(CUSTOMER_CREDIT_CHECKING);
+    save.accept(CUSTOMER_CREDIT_CHECKING);
     //Do logic with creditService
-    save(CUSTOMER_CREDIT_DONE);
+    save.accept(CUSTOMER_CREDIT_DONE);
 
-    save(ITEM_QUANTITY_CHECKING);
+    save.accept(ITEM_QUANTITY_CHECKING);
     //Do logic with paService
-    save(ITEM_QUANTITY_DONE);
+    save.accept(ITEM_QUANTITY_DONE);
 
-    save(ITEM_DELIVERABILITY_CHECKING);
+    save.accept(ITEM_DELIVERABILITY_CHECKING);
     //Do logic with pdService
-    save(ITEM_DELIVERABILITY_DONE);
+    save.accept(ITEM_DELIVERABILITY_DONE);
 }
 ```
 I want to shout TADA! like a magician does after performing a trick! :D 
