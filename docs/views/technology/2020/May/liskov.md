@@ -1,5 +1,5 @@
 ---
-title: The L in SOLID
+title: "Solid Principles Part 1 : The L in SOLID"
 author: Samrat Saha
 date: 2020-05-25
 tags:
@@ -31,7 +31,7 @@ When I first read this, I seriously had the thought of skipping this principle. 
 Consider we have 2 classes S and T such that there exists a relationship that S is a sub(child) class of T then it should always be possible to substitute instances of S wherever there are instances of T without breaking the code ie, **the code should not need additional changes to accomodate S**.
 
 ## Misunderstanding
-By reading the definition, you would think in strongly typed languages like Java, Scala etc. when using inheritance, the compiler will give us error if we are not conforming to the parent class. So ofcourse we would be able to substitute child class object where parent class object are used. I also read somewhere, that this principle was initially used by Ruby users as they didnt have strong typing. So this would lead us to think that there is no need for us to know further than this as the language takes care of it for us but it is not really true. Though it is true that the language will take of substitution ability but we still need to take care of the runtime behaviour ourselves :)
+By reading the definition, you would think in strongly typed languages like Java, Scala etc. when using inheritance, the compiler will give us error if we are not conforming to the parent class. So ofcourse we would be able to substitute child class object where parent class object are used. I also read somewhere, that this principle was initially used by Ruby users as they didnt have strong typing. So this would lead us to think that there is no need for us to know further than this as the language takes care of it for us but it is not really true. Though it is true that the language will take care of checking substitution ability but we still need to take care of the runtime behaviour ourselves :)
 
 ## Square and Rectangle Problem
 There is a popular example of Square and Rectangle on the internet and i would also like to use it. So, lets say we define a Rectangle class and then use _inheritance_ to _define_ a Square class,  as "**Every Square is a Rectangle but not every Rectangle is a Square**". 
