@@ -1,7 +1,7 @@
 ---
 title: "Solid Principles Part 2 : Single Responsibility and Interface Segregation"
 author: Samrat Saha
-date: 2020-14-10
+date: 2020-11-14
 tags:
  - beginner
  - intermediate
@@ -154,6 +154,9 @@ To a person who has decent experience in Java, should be able to figure out what
 
 ``` java
 import java.io.*;
+import java.util.Collections;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 public class FileValidator {
     private final ValidatorConfig config;
