@@ -207,7 +207,7 @@ public class FileValidator {
     //Made a config class to keep some config to be dynamic, now some part of the responsibility falls on the caller code, to pass the configuration.
     //In our case, if expectedColumns is 3, then onlyNumberColumns should contain 2 (last column index).
     //Also the separator string, should be passed as "\t"
-    //Maybe we also need to do some time of validation, like onlyNumberColumns does not exceed expectedColums? However, i have kept this code simple for clarity.
+    //Maybe we also need to do some type of validation, like onlyNumberColumns does not exceed expectedColums? However, i have kept this code simple for clarity.
     public static class ValidatorConfig {
         public final int expectedColumns;
         public final Set<Integer> onlyNumberColumns;
@@ -215,7 +215,7 @@ public class FileValidator {
 
         public ValidatorConfig(int expectedColumns, Set<Integer> numberColumns, String separator) {
             this.expectedColumns = expectedColumns;
-            this.onlyNumberColumns = numberColumns;
+            this.onlyNumberColumns = Collections.unmodifiableSet(numberColumns);
             this.separator = separator;
         }
     }

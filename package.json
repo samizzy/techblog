@@ -9,7 +9,7 @@
   "devDependencies": {
     "@vuepress/plugin-google-analytics": "^1.5.3",
     "vuepress": "^1.5.0",
-    "vuepress-theme-reco": "1.5.5"
+    "vuepress-theme-reco": "1.6.1"
   },
   "description": "Test reco theme",
   "dependencies": {
