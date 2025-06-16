@@ -4,7 +4,7 @@
 set -e
 
 # build
-yarn build
+pnpm build
 
 # navigate into the build output directory
 cd public
@@ -14,7 +14,7 @@ echo 'bakacoder.com' > CNAME
 
 git init
 git add -A
-git commit -m 'initial commit'
+git commit -m 'deploy'
 
 # if you are deploying to https://<USERNAME>.github.io
 git push -f https://github.com/samizzy/samizzy.github.io.git master
