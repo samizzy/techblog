@@ -7,7 +7,7 @@ set -e
 pnpm build
 
 # navigate into the build output directory
-cd public
+cd .vuepress/dist
 
 # if you are deploying to a custom domain
 echo 'bakacoder.com' > CNAME
