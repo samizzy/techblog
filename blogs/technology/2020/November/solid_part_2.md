@@ -253,27 +253,6 @@ If you want to take something away, it would be to make a conscious effort to ke
 
 Thanks for reading!
 
-***
-<template>
-  <div>
-    <div class='comments'>
-      <Disqus shortname='tech-9732viigce' />
-    </div>
-  </div>
-</template>
-
-<script>
-import { Disqus } from 'vue-disqus'
-
-export default {
-  name: 'PostPage',
-  components: {
-    Disqus
-  }
-}
-</script>
-
-
 
 
 

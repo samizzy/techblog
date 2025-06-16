@@ -330,23 +330,3 @@ Finally at line 9, we get to say to the api, that we want to group the values by
 
 ## Conclusion
 So that's it for Streams and Lambdas! There plenty more things you can do, so read the api docs!
-
-***
-<template>
-  <div>
-    <div class='comments'>
-      <Disqus shortname='tech-9732viigce' />
-    </div>
-  </div>
-</template>
-
-<script>
-import { Disqus } from 'vue-disqus'
-
-export default {
-  name: 'PostPage',
-  components: {
-    Disqus
-  }
-}
-</script>

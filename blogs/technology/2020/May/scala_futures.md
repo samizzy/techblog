@@ -242,22 +242,3 @@ So thats all for now! Thanks for reading! We'll take a look at the rest of the m
 
 ## Code Samples
 All code on this page is available on this [GitHub repository](https://github.com/samizzy/scala-futures-basics)
-***
-<template>
-  <div>
-    <div class='comments'>
-      <Disqus shortname='tech-9732viigce' />
-    </div>
-  </div>
-</template>
-
-<script>
-import { Disqus } from 'vue-disqus'
-
-export default {
-  name: 'PostPage',
-  components: {
-    Disqus
-  }
-}
-</script>

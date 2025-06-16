@@ -17,6 +17,7 @@ Yes, Java 8 has become quite old but it is still the most popular Java version i
 
 <!-- more -->
 
+![java_beans](/java_beans.jpg)
 <img src="/java_beans.jpg"/>
 
 ::: warning Note
@@ -292,22 +293,3 @@ What makes a interface a Functional interface is if it has only one abstract met
 
 Anyways that's all for now. I will write about Lambdas, Streams and Method References next as that is needed for more clarity about
 actually using Functional interfaces.
-***
-<template>
-  <div>
-    <div class='comments'>
-      <Disqus shortname='tech-9732viigce' />
-    </div>
-  </div>
-</template>
-
-<script>
-import { Disqus } from 'vue-disqus'
-
-export default {
-  name: 'PostPage',
-  components: {
-    Disqus
-  }
-}
-</script>

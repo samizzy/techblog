@@ -260,23 +260,3 @@ Its such a small change but look how good the code looks now.
 So that's it, these simple and small changes can make a large difference when writing code. I'll update this post when I find other useful tricks.
 
 Thanks for reading!
-
-***
-<template>
-  <div>
-    <div class='comments'>
-      <Disqus shortname='tech-9732viigce' />
-    </div>
-  </div>
-</template>
-
-<script>
-import { Disqus } from 'vue-disqus'
-
-export default {
-  name: 'PostPage',
-  components: {
-    Disqus
-  }
-}
-</script>
