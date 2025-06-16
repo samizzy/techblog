@@ -6,10 +6,10 @@ modules:
   - MdContent
   - Footer
 bannerBrand:
-  bgImage: '/daniel-leone-v7daTKlZzaw-unsplash.jpg'
-  title: The blog
-  description: Those who say it cannot be done should not interrupt those doing it
-  tagline: some tag line
+  #bgImage: '/dark_galaxy_purple.png'
+  title: "Chaos Farmer"
+  description: ""
+  tagline: "Notes from a backend engineer navigating clean code, broken builds, and the occasional existential crisis"
 #  buttons:
  #   - { text: Guide, link: '/docs/guide/introduce' }
   #  - { text: Default Style, link: '/docs/style-default-api/introduce', type: 'plain' }
