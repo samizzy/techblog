@@ -3,14 +3,7 @@ title: "Solid Principles Part 2 : Single Responsibility and Interface Segregatio
 author: Samrat Saha
 date: 2020-11-14
 tags:
- - beginner
- - intermediate
- - solid
  - design principle
- - scala
- - java
- - Single Responsibility
- - Interface Segregation
 categories:
  - technology
 ---

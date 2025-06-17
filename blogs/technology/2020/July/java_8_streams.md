@@ -5,11 +5,6 @@ date: 2020-07-20
 tags:
  - intermediate
  - java
- - java 8
- - features
- - functional interfaces
- - streams
- - lambdas
 categories:
  - technology
 ---

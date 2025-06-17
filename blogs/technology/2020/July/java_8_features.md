@@ -5,9 +5,6 @@ date: 2020-07-18
 tags:
  - intermediate
  - java
- - java 8
- - features
- - functional interfaces
 categories:
  - technology
 ---

@@ -3,13 +3,9 @@ title: "Solid Principles Part 1 : The L in SOLID"
 author: Samrat Saha
 date: 2020-05-25
 tags:
- - beginner
  - intermediate
- - solid
  - design principle
  - scala
- - java
- - liskov substitution principle
 categories:
  - technology
 ---

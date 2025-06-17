@@ -4,7 +4,6 @@ author: Samrat Saha
 date: 2020-05-17
 tags:
  - beginner
- - intermediate
  - scala
  - futures
 categories:

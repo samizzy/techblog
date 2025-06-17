@@ -3,11 +3,8 @@ title: How to modularize your Java 8 code
 author: Samrat Saha
 date: 2020-08-15
 tags:
- - intermediate
+ - beginner
  - java
- - java 8
- - functional interfaces
- - lambdas
 categories:
  - technology
 publish: true
