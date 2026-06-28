@@ -8,113 +8,111 @@ categories:
  - technology
 ---
 
-Why do I miss so many trivial bugs in my code? What does this class/method actually do? How do I write code in a more maintable way? 
-If you ask yourself such questions then this is the right post for you, keep reading.
+Why do I miss so many trivial bugs in my code? What does this class/method actually do? How do I write code in a more maintainable way?
+If you ask yourself these questions then this is the right post for you — keep reading.
 
 <!-- more -->
 
 ## Introduction
-If you still don't know why you should follow or atleast look to include SOLID principles in software design then I highly recommend reading my earlier post on [Liskov Substituion Principle](../May/liskov.html).
+If you still don't know why you should follow or at least look to include SOLID principles in software design, I highly recommend reading my earlier post on [Liskov Substituion Principle](../May/liskov.html).
 
-Basically it's a set of rules that allow us write code that is easier to understand, maintain, extend and test. However, I should also say that it's not always possible to religiously follow the rules as practically some new requirement may come that totally f*** ups your design, so you do the unthinkable and break the rules and that's totally fine as no perfect code exists.
+Basically it's a set of rules that allow us to write code that is easier to understand, maintain, extend, and test. That said, it's not always possible to follow the rules religiously — practically speaking, some new requirement may come along that totally f*** ups your design, so you do the unthinkable and break the rules. And that's totally fine, because no perfect code exists.
 
 ::: tip Keep in mind
- It's not possible to design your software from the start that will adhere to SOLID, as time goes on you will find certain patterns in your code and will refactor those (this is the most likely case). However, it doesnt mean you shouldn't try your best to follow from start and how will you come to know what principles to apply? this will come to you through experience, knowing your business domain and hopefully these posts can help you a little.
+It's not possible to design your software from the start such that it fully adheres to SOLID. As time goes on you will find certain patterns in your code and refactor them (this is the most likely case). However, that doesn't mean you shouldn't try your best to follow them from the start. How will you know which principles to apply? That comes through experience, knowing your business domain, and hopefully these posts help a little.
 :::
-Coming back to our original topic, why have I clubbed Single Responsibility and Interface Segregation, it's because both are very similar in what they mean. Both of them point to reducing the responsibility of what a certain block of code should do.
 
-Alright enough lets get started!
+Coming back to our original topic — why have I clubbed Single Responsibility and Interface Segregation together? It's because both are very similar in what they mean. Both point to reducing the responsibility of what a certain block of code should do.
+
+Alright, enough of that — let's get started!
 
 ## Single Responsibility
 
-It simply says, _"One module/class/function should only do one thing"_. So it's not hard to understand the meaning, the difficult part is understanding, how does it matter and how do you define this one thing.
+It simply says, _"One module/class/function should only do one thing"_. The meaning isn't hard to grasp; the difficult part is understanding how it matters and how you define this "one thing."
 
-I think it would be more clear to understand when we see a code comparsion example. Lets consider a example of Video class.
+A code comparison example should make it clearer. Let's consider an example of a `Video` class.
 
 ::: tip Way of life
-SRP applies to your whole code architecture, that means modules/classes/functions. Its a way of life..
+SRP applies to your whole code architecture — modules, classes, functions. It's a way of life.
 :::
 
 ### Class Bad Code Example
 
-``` java
-public class Video{
+```java
+public class Video {
 
-    long getVideoId(){..}
+    long getVideoId() { ... }
 
-    int getVideoLength(){...}
+    int getVideoLength() { ... }
 
-    int getCurrentNumberOfWatchingUsers(){...}
+    int getCurrentNumberOfWatchingUsers() { ... }
 
-    List<Comment> getVideoComments(){...}
+    List<Comment> getVideoComments() { ... }
 
-    int getTotalViews(){...}
+    int getTotalViews() { ... }
 
-    InputStream getVideoStream(){...}
+    InputStream getVideoStream() { ... }
 }
 ```
 
-The above class is clearly trying to do too many things, it has methods related to actual video content but also related to video statistics and comments. Now from the perspective modelling a real-life object you would say it makes sense that such methods are present in the same class as we all know OOP is all about using __real-life models__.
+The above class is clearly trying to do too many things. It has methods related to the actual video content, but also to video statistics and comments. From the perspective of modelling a real-life object, you might say it makes sense to have such methods in the same class — after all, OOP is all about using __real-life models__.
 
-But it's not correct, OOP gives us the ability to use Inheritance, Encapsulation, Polymorphism in a very easy to use way and designing the `Video Class` like this does will only give us problems, let us look at a better way to do this.
+But that's not quite right. OOP gives us Inheritance, Encapsulation, and Polymorphism to use in a clean way, and designing the `Video` class like this will only cause problems. Let's look at a better approach.
 
 ### Class Good Code Example
 
-``` java
+```java
 class Video {
 
-    long getVideoId(){...}
+    long getVideoId() { ... }
 
-    int getVideoLength(){...}
+    int getVideoLength() { ... }
 
-    InputStream getVideoStream(){...}
-
+    InputStream getVideoStream() { ... }
 }
 
-class VideoStatistics{
+class VideoStatistics {
 
-    public VideoStatistics(long videoId){...}
+    public VideoStatistics(long videoId) { ... }
 
-    int getCurrentNumberOfWatchingUsers(){...}
+    int getCurrentNumberOfWatchingUsers() { ... }
 
-    int getTotalViews(){...}
-
+    int getTotalViews() { ... }
 }
 
+class VideoComment {
 
-class VideoComment{
+    public VideoComment(long videoId) { ... }
 
-    public VideoComment(long videoId){...}
-
-    List<Comments> getComments(int lastNumComments){...}
+    List<Comment> getComments(int lastNumComments) { ... }
 }
 ```
 
-I have separated the methods according to their core functionality and also considering their **source of change**. Now above design may not be the best as we are yet to consider other principles but what benefit does this design give us? 
+I've separated the methods according to their core functionality, also keeping their **source of change** in mind. The design above may not be perfect — we haven't considered the other principles yet — but what benefit does it already give us?
 
-Benefits by isolating core features:
-- Easier to understand what is the focus/responsibility of the class.
-- Change in one class will not affect each other and hence easier to maintain.
-- Easier to design tests as they do less and specific things, also refactoring becomes easier.
+Benefits of isolating core features:
+- Easier to understand what the focus/responsibility of a class is.
+- Changes in one class won't affect the others, making it easier to maintain.
+- Easier to write tests since each class does fewer, more specific things — and refactoring becomes easier too.
 
-As a consequence of above benefits, you will be able to spot bugs in your application more easily.
+As a consequence of these benefits, you'll also be able to spot bugs in your application more easily.
 
-Now the question is, are our classes still doing **"only one thing"** according to the Single Responsibility Principle? Well technically **NO** but functionally yes and perhaps we can even more drill down on what the class should do? but for a toy example I think you get the point.
+Now the question is: are our classes still doing **"only one thing"** according to the Single Responsibility Principle? Technically **NO**, but functionally yes — and could we drill down further on what each class should do? Probably, but for a toy example I think you get the point.
 
-We also have to be pragmatic as programmers, sometimes it is more convenient to have a class do multiple things. Consider the String class in java it has methods related to getting Char, substring, indexOf, contains etc. Is this wrong? I feel if you are sure your code is rock solid and it will most likely will not encounter any changes then it's fine.
+We also have to be pragmatic as programmers. Sometimes it's more convenient to have a class do multiple things. Consider the `String` class in Java — it has methods for getting chars, substrings, indexOf, contains, and more. Is that wrong? I think if you're confident your code is rock solid and unlikely to change, it's fine.
 
-Perhaps we should also observe a comparision for a method as well
+Perhaps we should also look at a comparison for a method.
 
 ### Function Bad Code Example
 
-Let's say we are writing a program to validate a file
+Let's say we are writing a program to validate a file:
 - The file should be \t separated
 - There should be exactly 3 columns
 - No column can be empty
 - Characters !,@,# and * are not allowed in any columns.
 - The last column should be a whole number
 
-``` java
+```java
 import java.io.*;
 
 public class FileValidator {
@@ -140,12 +138,13 @@ public class FileValidator {
     }
 }
 ```
-To a person who has decent experience in Java, should be able to figure out what is happening in above code but he still has to look closely because there a lot of things happening and if he misses some small nuance in code, he could mistake what the method is doing.
+
+A person with decent Java experience should be able to figure out what's happening above, but they still have to read closely because there's a lot going on. Miss a small nuance and they could easily misread what the method is doing.
 
 
 ### Function Good Code Example
 
-``` java
+```java
 import java.io.*;
 import java.util.Collections;
 import java.util.Set;
@@ -164,8 +163,8 @@ public class FileValidator {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             return bufferedReader.lines().allMatch(line -> {
                 String[] columns = splitLine(line, config.separator);
-                return isNumberOfColsValid(columns, config.expectedColumns) && 
-                        isValidColumns(columns, config.onlyNumberColumns);
+                return isNumberOfColsValid(columns, config.expectedColumns)
+                    && isValidColumns(columns, config.onlyNumberColumns);
             });
         }
     }
@@ -174,7 +173,6 @@ public class FileValidator {
         for (int i = 0; i < columns.length; i++) {
             if (isEmptyOrHasSpecialChars(columns[i]))
                 return false;
-
             if (onlyNumberCols.contains(i) && !isWholeNumber(columns[i]))
                 return false;
         }
@@ -197,10 +195,8 @@ public class FileValidator {
         return WHOLE_NUMBER_REGEX.matcher(col).matches();
     }
 
-    //Made a config class to keep some config to be dynamic, now some part of the responsibility falls on the caller code, to pass the configuration.
-    //In our case, if expectedColumns is 3, then onlyNumberColumns should contain 2 (last column index).
-    //Also the separator string, should be passed as "\t"
-    //Maybe we also need to do some type of validation, like onlyNumberColumns does not exceed expectedColums? However, i have kept this code simple for clarity.
+    // Config class keeps validation rules dynamic; the caller is responsible for passing correct values.
+    // If expectedColumns is 3, onlyNumberColumns should contain 2 (last column index).
     public static class ValidatorConfig {
         public final int expectedColumns;
         public final Set<Integer> onlyNumberColumns;
@@ -213,40 +209,35 @@ public class FileValidator {
         }
     }
 }
-
 ```
-What do you expect in a good code? In short terms, the code should be simple. The logic need not be simple ofcourse but your code should not help in making it more difficult to understand.
 
-Use short methods containing only few lines, properly named methods that do one thing. Do not try to do many things in a code block, __deligate__ the pieces of code to a method with __meaningful name__, so that when someone is reading your code, he/she need not _inspect_ your method logic to determine what is happening, the name should be enough. Another important thing, try to make the methods be __functional__, they should take input whatever they need and return the output (__less side-effect__).
+What do you expect from good code? Simply put, it should be easy to read. The logic doesn't have to be simple — but your code shouldn't make it harder to understand than it needs to be.
+
+Use short methods with only a few lines. Give them meaningful names that describe what they do. Don't try to do many things in one block — __delegate__ pieces of logic to a method with a __meaningful name__, so that when someone reads your code, they don't need to _inspect_ the method body to figure out what's happening; the name should be enough. One more thing: try to keep methods __functional__ — they should take whatever inputs they need and return the output (__fewer side effects__).
 
 ## Interface Segregation Principle
 
-It says, *_“Clients should not be forced to depend upon interfaces that they do not use.”_* Another definition says, *_"Many client specific interfaces are better than one general purpose interface"_*
+It says, *_"Clients should not be forced to depend upon interfaces that they do not use."_* Another way to put it: *_"Many client-specific interfaces are better than one general-purpose interface."_*
 
-Now here you have to think from the perspective of client of a class(general interface), i.e the user of a class. Also you have to think from the perspective of that class(general inteface) which will be used by multiple clients, when I say multiple clients I don't mean just multiple instances of a client to achieve a similar task but each client wants to a different class.
+Here you have to think from two angles: the perspective of the client of a class (i.e., the user), and the perspective of the class itself (the general interface) which is used by multiple clients. When I say multiple clients, I don't just mean multiple instances doing a similar task — I mean each client wants to use the class for a different purpose.
 
 <img src="/client_class.svg"/>
 
-Now general interface has all methods that are used by different clients but each client will only ever be interested in only a single method. So basically each client sees 2 other methods which are useless to it and this is a violation ISP.
+The general interface has all the methods used by different clients, but each client will only ever care about one of them. So each client sees two methods that are completely useless to it — and that's a violation of ISP.
 
-Now you might want to ask that even though it violates ISP, why does it matter? The problem here is as a user/client I am able to see all public methods of GI but I only need one. This might not a seem like a problem with just 3 methods but imagine a interface having 10-15 methods. There should be some kind of facade or a more narrow interface that the client should see and use.
+You might ask: even if it violates ISP, why does it actually matter? The problem is that as a client I can see all the public methods of the general interface, even though I only need one. With just 3 methods this might seem like no big deal, but imagine an interface with 10–15 methods. There should be some kind of facade or a narrower interface for clients to see and use.
 
 <img src="/revised_interface_di.svg"/>
 
-Narrowing down will help in writing mock classes with less mock methods, as well as give a clear idea on which methods the client actually depends.
+Narrowing it down helps in writing mock classes with fewer mock methods, and gives a clearer picture of which methods a client actually depends on.
 
-However, if there are multiple clients who use various methods and you try to make a special narrowed down interface for each client, that will do more harm than good.
-We just need to keep in mind to make narrow interfaces for categories of clients.
+That said, if there are multiple clients that each use various methods and you try to create a special narrow interface for every single one of them, that will do more harm than good.
+The key is to make narrow interfaces for *categories* of clients, not for every individual one.
 
-And as I said before ISP is _similar_ to SRP that it boils down to reducing the responsibility of a particular block of code!
+And as I said earlier, ISP is _similar_ to SRP in that it all boils down to reducing the responsibility of a particular block of code!
 
 ## Conclusion
 
-If you want to take something away, it would be to make a conscious effort to keep your code short (not at the cost of readability) and not do many things in a class/method.
+If there's one thing to take away, it's this: make a conscious effort to keep your code short (without sacrificing readability) and avoid cramming too many responsibilities into a single class or method.
 
 Thanks for reading!
-
-
-
-
-

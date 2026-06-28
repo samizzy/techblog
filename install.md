@@ -1,3 +1,7 @@
+---
+article: false
+---
+
 # Setting up locally
 
 ## Installing node manager/installer
